@@ -1,0 +1,23 @@
+﻿<Window x:Class="CompBigBrother.DatabaseConnector"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CompBigBrother"
+        mc:Ignorable="d"
+        Title="Подключение к БД" SizeToContent="WidthAndHeight">
+    <StackPanel Orientation="Vertical" Margin="24">
+        <TextBlock Text="Сервер" />
+        <TextBox Text="{Binding Server}"/>
+        <TextBlock Text="База данных" />
+        <TextBox Text="{Binding DB}"/>
+        <TextBlock Text="Логин" />
+        <TextBox Text="{Binding User}"/>
+        <TextBlock Text="Пароль" />
+        <TextBox Text="{Binding Password}"/>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button Content="Тест" Click="btn_testMySql" />
+            <Button Content="Сохранить" Click="btn_saveMySql" Command="{Binding Save}" />
+        </StackPanel>
+    </StackPanel>
+</Window>
