@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CompBigBrother.Model;
-
+using CompBigBrother.DatabaseAccessLayer;
 namespace CompBigBrother.ViewModel
 {
     class UserViewModel : AbstractNotifyModel
@@ -23,12 +23,14 @@ namespace CompBigBrother.ViewModel
         }
 
         public ObservableCollection<User> FilterUsers { get; set; } = new ObservableCollection<User>();
-        public ObservableCollection<User> Users { get; set; } = new ObservableCollection<User>();
+        public ObservableCollection<User> Users { get; set; }
         public CustomModelCommand<User> AddUser { get; set; }
         public CustomModelCommand<User> RemoveUser { get; set; }
 
         public UserViewModel()
         {
+            Users = new ObservableCollection<User>(UserSql.GetAllUsers());
+
             AddUser = new CustomModelCommand<User>((u) =>
             {
                 User user = new User { CabID = 1, FirstName = "Имя", LastName = "Фамилия", ID = MySQLMain.ShowNextId("users"), UserType = 1 };

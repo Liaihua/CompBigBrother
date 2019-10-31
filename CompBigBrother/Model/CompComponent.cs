@@ -22,6 +22,9 @@ namespace CompBigBrother.Model
         public float Price { get => price; set { price = value; RaiseEvent(nameof(Price)); } }
         public int ComputerID { get => computerId; set { computerId = value; RaiseEvent(nameof(ComputerID)); } }
         public int StatusID { get => statusId; set { statusId = value; RaiseEvent(nameof(StatusID)); } }
+        public string StatusValue { get => Status.Statuses[StatusID]; set {
+                StatusID = Status.Statuses.First((s) => s.Value == value).Key;
+            } }
         public string SerialNumber { get => serialNumber; set { serialNumber = value; RaiseEvent(nameof(SerialNumber)); } }
 
     }

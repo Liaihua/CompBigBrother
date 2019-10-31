@@ -62,5 +62,10 @@ namespace CompBigBrother
         {
             Close();
         }
+
+        private void ComputerDataGrid_SourceUpdated(object sender, DataTransferEventArgs e)
+        {
+
+        }
     }
 }

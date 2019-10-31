@@ -60,7 +60,7 @@
                         </DataGrid.Columns>
                         <DataGrid.ContextMenu>
                             <ContextMenu>
-                                <MenuItem Header="Обновить" Command=""
+                                <MenuItem Header="Обновить" Command="{Binding RefreshComputers}"/>
                                 <MenuItem Header="Добавить компьютер" Command="{Binding AddComputer}" CommandTarget="{Binding SelectedComputer}"/>
                                 <MenuItem Header="Удалить компьютер" Command="{Binding RemoveComputer}" CommandParameter="{Binding SelectedComputer}"/>
                             </ContextMenu>
@@ -87,12 +87,22 @@
                     <DataGrid Name="ComponentDataGrid" ItemsSource="{Binding Components}" AutoGenerateColumns="False" CanUserAddRows="False">
                         <DataGrid.Columns>
                             
-                                <DataGridTextColumn Header="Название детали" Binding="{Binding Name}"/>
-                                <DataGridTextColumn Header="Серийный номер" Binding="{Binding SerialNumber}"/>
-                                <DataGridTextColumn Header="Цена" Binding="{Binding Price}"/>
-                                <DataGridTextColumn Header="Компьютер с компонентом" Binding="{Binding ComputerID}"/>
-                                <DataGridTextColumn Header="Статус" Binding="{Binding StatusID}"/>
-                            
+                            <DataGridTextColumn Header="Название детали" Binding="{Binding Name}"/>
+                            <DataGridTextColumn Header="Серийный номер" Binding="{Binding SerialNumber}"/>
+                            <DataGridTextColumn Header="Цена" Binding="{Binding Price}"/>
+                            <DataGridTemplateColumn Header="Статус">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding StatusValue}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                                <DataGridTemplateColumn.CellEditingTemplate>
+                                    <DataTemplate>
+                                        <ComboBox ItemsSource="{view:StatusViewModel}" SelectedItem="{Binding StatusValue}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellEditingTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTextColumn Header="Компьютер с компонентом" Binding="{Binding ComputerID}"/>
                         </DataGrid.Columns>
                         <DataGrid.ContextMenu>
                             <ContextMenu>
@@ -119,12 +129,10 @@
                     </Grid.RowDefinitions>
                     <DataGrid Name="UserDataGrid" ItemsSource="{Binding Users}" AutoGenerateColumns="False" CanUserAddRows="False">
                         <DataGrid.Columns>
-                            
-                                <DataGridTextColumn Header="Имя" Binding="{Binding FirstName}"/>
-                                <DataGridTextColumn Header="Фамилия" Binding="{Binding LastName}"/>
-                                <DataGridTextColumn Header="Кабинет" Binding="{Binding CabID}"/>
-                                <DataGridTextColumn Header="Должность" Binding="{Binding Type}"/>
-                            
+                            <DataGridTextColumn Header="Имя" Binding="{Binding FirstName}"/>
+                            <DataGridTextColumn Header="Фамилия" Binding="{Binding LastName}"/>
+                            <DataGridTextColumn Header="Кабинет" Binding="{Binding CabID}"/>
+                            <DataGridTextColumn Header="Должность" Binding="{Binding Type}"/>
                         </DataGrid.Columns>
                         <DataGrid.ContextMenu>
                             <ContextMenu>
