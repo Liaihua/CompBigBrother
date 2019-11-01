@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
 namespace CompBigBrother
 {
-    class Status: MySQLMain
+    class Status : MySQLMain
     {
         public static readonly Dictionary<int, string> Statuses = new Dictionary<int, string>();
 

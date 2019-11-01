@@ -44,7 +44,7 @@ namespace CompBigBrother.DatabaseAccessLayer
         public void InsertComponent(CompComponent component)
         {
             component.ID = ShowNextId("components");
-            string query = "INSERT INTO components VALUE (0, @a, @b, @c, @d, @e)";
+            string query = "INSERT INTO components VALUE (0, @a, @b, -1, @d, @e)";
             if (OpenConnection())
             {
                 using (MySqlCommand command = new MySqlCommand(query, connection))
@@ -54,9 +54,6 @@ namespace CompBigBrother.DatabaseAccessLayer
                     command.Parameters.Add(parameter);
                     parameter = new MySqlParameter("@b", MySqlDbType.Float);
                     parameter.Value = component.Price;
-                    parameter = new MySqlParameter("@c", MySqlDbType.Int32);
-                    command.Parameters.Add(parameter);
-                    parameter.Value = component.ComputerID;
                     command.Parameters.Add(parameter);
                     parameter = new MySqlParameter("@d", MySqlDbType.Int32);
                     parameter.Value = component.StatusID;
@@ -86,7 +83,7 @@ namespace CompBigBrother.DatabaseAccessLayer
                     parameter = new MySqlParameter("@c", MySqlDbType.String);
                     parameter.Value = component.ComputerID;
                     command.Parameters.Add(parameter);
-                    parameter = new MySqlParameter("@d", MySqlDbType.Int32);
+                    parameter = new MySqlParameter("@d", MySqlDbType.String);
                     parameter.Value = component.SerialNumber;
                     command.Parameters.Add(parameter);
                     parameter = new MySqlParameter("@e", MySqlDbType.Int32);

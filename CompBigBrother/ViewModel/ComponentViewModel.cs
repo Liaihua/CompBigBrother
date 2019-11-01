@@ -21,7 +21,8 @@ namespace CompBigBrother.ViewModel
                 RaiseEvent(nameof(SelectedComponent));
             }
         }
-        public ObservableCollection<CompComponent> Components { get; set; } = new ObservableCollection<CompComponent>();
+        public ObservableCollection<CompComponent> Components { get; set; }
+        public CustomModelCommand<DBNull> RefreshComponents { get; set; }
         public CustomModelCommand<CompComponent> AddComponent { get; set; }
         public CustomModelCommand<CompComponent> UpdateComponents { get; set; }
         public CustomModelCommand<CompComponent> RemoveComponent { get; set; }
@@ -32,9 +33,15 @@ namespace CompBigBrother.ViewModel
             Components = new ObservableCollection<CompComponent>(componentSql.GetAllComponents());
             AddComponent = new CustomModelCommand<CompComponent>((c) =>
             {
-                
-                CompComponent component = new CompComponent { ID = MySQLMain.ShowNextId("components"), ComputerID = 1, Name = "Новый компонент", Price = 0, SerialNumber = "", StatusID = 1 };
+                CompComponent component = new CompComponent { ID = MySQLMain.ShowNextId("components"), Name = "Новый компонент", Price = 0, SerialNumber = "", StatusID = 1 };
+                componentSql.InsertComponent(component);
                 Components.Add(component);
+            });
+
+            RefreshComponents = new CustomModelCommand<DBNull>((n) => 
+            {
+                Components = new ObservableCollection<CompComponent>(componentSql.GetAllComponents());
+                RaiseEvent(nameof(Components));
             });
 
             UpdateComponents = new CustomModelCommand<CompComponent>((c) =>
@@ -46,6 +53,7 @@ namespace CompBigBrother.ViewModel
             RemoveComponent = new CustomModelCommand<CompComponent>((c) =>
             {
                 Components.Remove(c);
+                componentSql.DeleteComponent(c);
             }, () => SelectedComponent != null);
         }
     }

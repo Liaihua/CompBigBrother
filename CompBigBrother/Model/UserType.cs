@@ -4,14 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
-namespace CompBigBrother.Model
+namespace CompBigBrother
 {
     class UserType : MySQLMain
     {
-        public static Dictionary<int, string> GetAllUserTypes()
+        public static readonly Dictionary<int, string> UserTypes = new Dictionary<int, string>();
+
+        public static void GetAllUserTypes()
         {
-            Dictionary<int, string> UserTypes = new Dictionary<int, string>();
-            string query = "SELECT * FROM user_type";
+            string query = "SELECT * FROM meta_user_type";
             try
             {
                 if (OpenConnection())
@@ -28,9 +29,8 @@ namespace CompBigBrother.Model
                     }
                     CloseConnection();
                 }
-                return UserTypes;
             }
-            catch (Exception ex) { System.Windows.MessageBox.Show(ex.Message); return null; }
+            catch (Exception ex) { System.Windows.MessageBox.Show(ex.Message); }
         }
     }
 }

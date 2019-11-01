@@ -21,6 +21,8 @@ namespace CompBigBrother.DatabaseAccessLayer
                     {
                         while(reader.Read())
                         {
+                            if (reader.GetInt32("id") == -1)
+                                continue;
                             computers.Add(
                                 new Computer
                                 {

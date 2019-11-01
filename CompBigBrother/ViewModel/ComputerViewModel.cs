@@ -43,6 +43,7 @@ namespace CompBigBrother.ViewModel
             RefreshComputers = new CustomModelCommand<DBNull>((n) =>
             {
                 Computers = new ObservableCollection<Computer>(computerSql.GetAllComputers());
+                RaiseEvent(nameof(Computers));
             });
 
             UpdateComputers = new CustomModelCommand<Computer>((c) => // Недопил (???)

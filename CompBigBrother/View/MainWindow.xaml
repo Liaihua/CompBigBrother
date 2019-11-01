@@ -21,7 +21,7 @@
         <Menu Grid.Row="0">
             <MenuItem Header="Главная">
                 <MenuItem Header="Подключение к базе" Click="DatabaseConnectorWindow_Open"/>
-                <MenuItem Header="Резервные копии">
+                <MenuItem Header="Резервные копии (Excel)">
                     <MenuItem Header="Загрузить резервную копию" Click="LoadDatabaseBackup_Click"/>
                     <MenuItem Header="Сделать резервную копию" Click="MakeDatabaseBackup_Click"/>
                 </MenuItem>
@@ -84,7 +84,7 @@
                         <RowDefinition Height="10*"/>
                         <RowDefinition Height="auto"/>
                     </Grid.RowDefinitions>
-                    <DataGrid Name="ComponentDataGrid" ItemsSource="{Binding Components}" AutoGenerateColumns="False" CanUserAddRows="False">
+                    <DataGrid Name="ComponentDataGrid" ItemsSource="{Binding Components}" SelectedItem="{Binding SelectedComponent}" AutoGenerateColumns="False" CanUserAddRows="False">
                         <DataGrid.Columns>
                             
                             <DataGridTextColumn Header="Название детали" Binding="{Binding Name}"/>
@@ -106,8 +106,9 @@
                         </DataGrid.Columns>
                         <DataGrid.ContextMenu>
                             <ContextMenu>
-                                <MenuItem Header="Добавить компонент"/>
-                                <MenuItem Header="Удалить компонент"/>
+                                <MenuItem Header="Обновить" Command="{Binding RefreshComponents}"/>
+                                <MenuItem Header="Добавить компонент" Command="{Binding AddComponent}" CommandTarget="{Binding SelectedComponent}"/>
+                                <MenuItem Header="Удалить компонент" Command="{Binding RemoveComponent}" CommandParameter="{Binding SelectedComponent}"/>
                             </ContextMenu>
                         </DataGrid.ContextMenu>
                     </DataGrid>
@@ -115,9 +116,11 @@
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
                             <ColumnDefinition Width="40px"/>
+                            <ColumnDefinition Width="120px"/>
                         </Grid.ColumnDefinitions>
                         <TextBox x:Name="SearchComponentByName_TextBlock" Grid.Column="0"/>
                         <Button x:Name="ComponentSearch" Content="Найти" Grid.Column="1"/>
+                        <Button x:Name="SaveComponents" Content="Спасти и сохранить" Grid.Column="2" Command="{Binding UpdateComponents}"/>
                     </Grid>
                 </Grid>
             </TabItem>
@@ -127,17 +130,23 @@
                         <RowDefinition Height="10*"/>
                         <RowDefinition Height="auto"/>
                     </Grid.RowDefinitions>
-                    <DataGrid Name="UserDataGrid" ItemsSource="{Binding Users}" AutoGenerateColumns="False" CanUserAddRows="False">
+                    <DataGrid Name="UserDataGrid" ItemsSource="{Binding Users}" SelectedItem="{Binding SelectedUser}" AutoGenerateColumns="False" CanUserAddRows="False">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Имя" Binding="{Binding FirstName}"/>
                             <DataGridTextColumn Header="Фамилия" Binding="{Binding LastName}"/>
                             <DataGridTextColumn Header="Кабинет" Binding="{Binding CabID}"/>
-                            <DataGridTextColumn Header="Должность" Binding="{Binding Type}"/>
+                            <DataGridTemplateColumn>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding UserTypeValue}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
                         </DataGrid.Columns>
                         <DataGrid.ContextMenu>
                             <ContextMenu>
-                                <MenuItem Header="Добавить пользователя"/>
-                                <MenuItem Header="Удалить пользователя"/>
+                                <MenuItem Header="Добавить пользователя" Command="{Binding AddUser}" CommandTarget="{Binding SelectedUser}"/>
+                                <MenuItem Header="Удалить пользователя" Command="{Binding RemoveUser}" CommandParameter="{Binding SelectedUser}"/>
                             </ContextMenu>
                         </DataGrid.ContextMenu>
                     </DataGrid>
@@ -145,28 +154,33 @@
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
                             <ColumnDefinition Width="40px"/>
+                            <ColumnDefinition Width="120px"/>
                         </Grid.ColumnDefinitions>
                         <TextBox x:Name="SearchUserByName_TextBlock" Grid.Column="0"/>
                         <Button x:Name="UserSearch" Content="Найти" Grid.Column="1"/>
+                        <Button x:Name="SaveUsers" Content="Спасти и сохранить" Grid.Column="2" Command="{Binding UpdateUsers}"/>
                     </Grid>
                 </Grid>
             </TabItem>
             <TabItem Name="RoomTab" Header="Кабинеты">
                 <Grid>
-                    <ListBox Name="RoomListBox" ItemsSource="{Binding Rooms}">
-                        <ListBox.ItemTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding Num}"/>
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-                        <ListBox.ContextMenu>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="10*"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <DataGrid Name="RoomListBox" Grid.Row="0" ItemsSource="{Binding Rooms}" AutoGenerateColumns="False" CanUserAddRows="False">
+
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Кабинеты" Binding="{Binding Num}"/>
+                        </DataGrid.Columns>
+                        <DataGrid.ContextMenu>
                             <ContextMenu>
-                                <MenuItem Header="Добавить кабинет"/>
-                                <MenuItem Header="Удалить кабинет"/>
+                                <MenuItem Header="Добавить кабинет" Command="{Binding AddRoom}" CommandTarget="{Binding SelectedRoom}"/>
+                                <MenuItem Header="Удалить кабинет" Command="{Binding RemoveRoom}" CommandParameter="{Binding SelectedRoom}"/>
                             </ContextMenu>
-                        </ListBox.ContextMenu>
-                    </ListBox>
-                    
+                        </DataGrid.ContextMenu>
+                    </DataGrid>
+                    <Button Grid.Row="1" Content="Сохранить" Command="{Binding UpdateRooms}"/>
                 </Grid>
                 
             </TabItem>
@@ -186,7 +200,7 @@
                         </ListView.View>
                         <ListView.ContextMenu>
                             <ContextMenu>
-                                <MenuItem Header="Обновить" Command="{Binding RefreshJournal}"/>
+                                <MenuItem Header="Обновить" Command="{Binding RefreshJournal}" CommandTarget="{Binding JournalEvents}"/>
                             </ContextMenu>
                         </ListView.ContextMenu>
                     </ListView>

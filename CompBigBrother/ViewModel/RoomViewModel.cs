@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CompBigBrother.Model;
+using CompBigBrother.DatabaseAccessLayer;
 namespace CompBigBrother.ViewModel
 {
     class RoomViewModel : AbstractNotifyModel
@@ -21,21 +22,32 @@ namespace CompBigBrother.ViewModel
             } 
         }
 
-        public ObservableCollection<Room> Rooms { get; set; } = new ObservableCollection<Room>();
+        public ObservableCollection<Room> Rooms { get; set; }
         public CustomModelCommand<Room> AddRoom { get; set; }
+        public CustomModelCommand<Room> UpdateRooms { get; set; }
         public CustomModelCommand<Room> RemoveRoom { get; set; }
 
         public RoomViewModel()
         {
+            RoomSql roomSql = new RoomSql();
+            Rooms = new ObservableCollection<Room>(roomSql.GetAllRooms());
             AddRoom = new CustomModelCommand<Room>((r) =>
             {
-                Room room = new Room { ID = MySQLMain.ShowNextId("rooms"), Num = "1" };
-                Rooms.Add(room);
+                r = new Room { ID = MySQLMain.ShowNextId("rooms"), Num = "Новая комната" };
+                Rooms.Add(r);
+                roomSql.InsertRoom(r);
+            });
+
+            UpdateRooms = new CustomModelCommand<Room>((c) => 
+            {
+                foreach (Room room in Rooms)
+                    roomSql.UpdateRoom(room);
             });
 
             RemoveRoom = new CustomModelCommand<Room>((r) =>
             {
                 Rooms.Remove(r);
+                roomSql.DeleteRoom(r);
             }, () => SelectedRoom != null);
         }
     }

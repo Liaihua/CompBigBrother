@@ -9,7 +9,7 @@ namespace CompBigBrother.DatabaseAccessLayer
 {
     class UserSql : MySQLMain
     {
-        public static List<User> GetAllUsers()
+        public List<User> GetAllUsers()
         {
             List<User> Users = new List<User>();
             string query = "SELECT * FROM users";
@@ -27,7 +27,7 @@ namespace CompBigBrother.DatabaseAccessLayer
                                 FirstName = reader.GetString("first_name"),
                                 LastName = reader.GetString("last_name"),
                                 CabID = reader.GetInt32("cab_id"),
-                                UserType = reader.GetInt32("type")
+                                UserTypeID = reader.GetInt32("type")
                             });
                         }
                     }
@@ -37,7 +37,7 @@ namespace CompBigBrother.DatabaseAccessLayer
             return Users;
         }
 
-        public static void InsertUser(User user)
+        public void InsertUser(User user)
         {
             user.ID = ShowNextId("users");
             string query = "INSERT INTO users VALUE (0, @a, @b, @c, @d)";
@@ -55,7 +55,7 @@ namespace CompBigBrother.DatabaseAccessLayer
                     parameter.Value = user.CabID;
                     command.Parameters.Add(parameter);
                     parameter = new MySqlParameter("@d", MySqlDbType.String);
-                    parameter.Value = user.UserType;
+                    parameter.Value = user.UserTypeID;
                     command.Parameters.Add(parameter);
                     command.ExecuteNonQuery();
                 }
@@ -63,7 +63,7 @@ namespace CompBigBrother.DatabaseAccessLayer
             }
         }
 
-        public static void UpdateUser(User user)
+        public void UpdateUser(User user)
         {
             string query = $"UPDATE users SET first_name = @a, last_name = @b, cab_id = @c, type = @d, WHERE id = {user.ID}";
             if (OpenConnection())
@@ -80,7 +80,7 @@ namespace CompBigBrother.DatabaseAccessLayer
                     parameter.Value = user.CabID;
                     command.Parameters.Add(parameter);
                     parameter = new MySqlParameter("@d", MySqlDbType.String);
-                    parameter.Value = user.UserType;
+                    parameter.Value = user.UserTypeID;
                     command.Parameters.Add(parameter);
                     command.ExecuteNonQuery();
                 }
@@ -88,7 +88,7 @@ namespace CompBigBrother.DatabaseAccessLayer
             }
         }
 
-        public static void DeleteUser(User user)
+        public void DeleteUser(User user)
         {
             if (user == null)
                 return;

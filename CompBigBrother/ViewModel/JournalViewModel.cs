@@ -10,7 +10,7 @@ namespace CompBigBrother.ViewModel
     public class JournalViewModel : AbstractNotifyModel
     {
         JournalSql journal = new JournalSql();
-        public List<JournalEvent> JournalEvents { get; set; } = new List<JournalEvent>();
+        public List<JournalEvent> JournalEvents { get; set; }
         public CustomModelCommand<JournalEvent> FilterJournal { get; set; }
         public CustomModelCommand<JournalEvent> RefreshJournal { get; set; }
 
@@ -21,6 +21,7 @@ namespace CompBigBrother.ViewModel
             RefreshJournal = new CustomModelCommand<JournalEvent>((c) =>
             {
                 JournalEvents = journal.GetJournal();
+                RaiseEvent(nameof(JournalEvents));
             });
         }
     }
