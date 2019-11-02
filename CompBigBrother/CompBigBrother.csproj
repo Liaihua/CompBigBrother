@@ -117,6 +117,7 @@
     <Compile Include="Model\ComputerType.cs" />
     <Compile Include="Model\UserType.cs" />
     <Compile Include="ViewModel\ComponentViewModel.cs" />
+    <Compile Include="ViewModel\ComputerTypeViewModel.cs" />
     <Compile Include="ViewModel\ComputerViewModel.cs" />
     <Compile Include="ViewModel\CustomModelCommand.cs" />
     <Compile Include="Model\MySQLMain.cs" />

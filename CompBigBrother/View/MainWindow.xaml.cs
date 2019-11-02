@@ -67,5 +67,43 @@ namespace CompBigBrother
         {
 
         }
+
+        private void SearchComputerByName_TextBlock_TextChanged(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(SearchComputerByName_TextBlock.Text))
+                ComputerDataGrid.ItemsSource = ComputerViewModel.Computers;
+            else
+            {
+                ComputerViewModel.FilterComputers.Execute(SearchComputerByName_TextBlock.Text);
+                ComputerDataGrid.ItemsSource = ComputerViewModel.FilteredComputers;
+            }
+        }
+
+        private void SearchComponentByName_TextBlock_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(SearchComponentByName_TextBlock.Text))
+                ComponentDataGrid.ItemsSource = ComponentViewModel.Components;
+            else
+            {
+                ComponentViewModel.FilterComponents.Execute(SearchComponentByName_TextBlock.Text);
+                ComponentDataGrid.ItemsSource = ComponentViewModel.FilteredComponents;
+            }
+        }
+
+        private void ExcelExportMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            DatabaseAccessLayer.ExcelExporter.ExportTables();
+        }
+
+        private void SearchUserByName_TextBlock_TextChanged(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(SearchUserByName_TextBlock.Text))
+                UserDataGrid.ItemsSource = UserViewModel.Users;
+            else
+            {
+                UserViewModel.FilterUsers.Execute(SearchUserByName_TextBlock.Text);
+                UserDataGrid.ItemsSource = UserViewModel.FilteredUsers;
+            }
+        }
     }
 }

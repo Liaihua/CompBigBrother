@@ -10,9 +10,6 @@ namespace CompBigBrother.Model
 {
     public class Computer : AbstractNotifyModel
     {
-        //Типы компьютеров (ПК, ноут, моноблок)
-        //static Dictionary<int, string> ComputerTypes = ComputerType.GetAllComputerTypes();
-
         private int id;
         private string name;
         private string serialNumber;
@@ -30,8 +27,9 @@ namespace CompBigBrother.Model
                 StatusID = Status.Statuses.First(s => s.Value == value).Key;  
             } }
         public int RoomID { get => roomID; set { roomID = value; RaiseEvent(nameof(RoomID)); } }
-        //public string RoomValue { get => }
         public int TypeID { get => typeID; set { typeID = value; RaiseEvent(nameof(TypeID)); } }
-        public string TypeValue { get => ComputerType.ComputerTypes[typeID]; }
+        public string TypeValue { get => ComputerType.ComputerTypes[typeID]; set {
+                TypeID = ComputerType.ComputerTypes.First(t => t.Value == value).Key;
+            } }
     }
 }

@@ -22,7 +22,9 @@ namespace CompBigBrother.ViewModel
             }
         }
         public ObservableCollection<Computer> Computers { get; set; }
+        public List<Computer> FilteredComputers { get; set; }
         public CustomModelCommand<DBNull> RefreshComputers { get; set; }
+        public CustomModelCommand<string> FilterComputers { get; set; }
         public CustomModelCommand<Computer> AddComputer { get; set; }
         public CustomModelCommand<Computer> UpdateComputers { get; set; }
         public CustomModelCommand<Computer> RemoveComputer { get; set; }
@@ -31,6 +33,7 @@ namespace CompBigBrother.ViewModel
         {
             ComputerSql computerSql = new ComputerSql();
             Computers = new ObservableCollection<Computer>(computerSql.GetAllComputers());
+            FilteredComputers = new List<Computer>();
             Status.GetAllStatuses();
             ComputerType.GetAllComputerTypes();
             AddComputer = new CustomModelCommand<Computer>((c) =>
@@ -38,6 +41,11 @@ namespace CompBigBrother.ViewModel
                 Computer computer = new Computer() { ID = MySQLMain.ShowNextId("computers"), Name = "Новый компьютер", Price = 0, RoomID = 1, SerialNumber = "", StatusID = 1, TypeID = 1 };
                 computerSql.InsertComputer(computer);
                 Computers.Add(computer);
+            });
+
+            FilterComputers = new CustomModelCommand<string>((s) =>
+            {
+                FilteredComputers = Computers.Where((c) => c.Name.Contains(s) || c.SerialNumber.Contains(s)).ToList();
             });
 
             RefreshComputers = new CustomModelCommand<DBNull>((n) =>

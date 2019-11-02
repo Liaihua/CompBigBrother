@@ -22,7 +22,9 @@ namespace CompBigBrother.ViewModel
             }
         }
         public ObservableCollection<CompComponent> Components { get; set; }
+        public List<CompComponent> FilteredComponents { get; set; }
         public CustomModelCommand<DBNull> RefreshComponents { get; set; }
+        public CustomModelCommand<string> FilterComponents { get; set; }
         public CustomModelCommand<CompComponent> AddComponent { get; set; }
         public CustomModelCommand<CompComponent> UpdateComponents { get; set; }
         public CustomModelCommand<CompComponent> RemoveComponent { get; set; }
@@ -31,6 +33,8 @@ namespace CompBigBrother.ViewModel
         {
             ComponentSql componentSql = new ComponentSql();
             Components = new ObservableCollection<CompComponent>(componentSql.GetAllComponents());
+            FilteredComponents = new List<CompComponent>();
+
             AddComponent = new CustomModelCommand<CompComponent>((c) =>
             {
                 CompComponent component = new CompComponent { ID = MySQLMain.ShowNextId("components"), Name = "Новый компонент", Price = 0, SerialNumber = "", StatusID = 1 };
@@ -42,6 +46,11 @@ namespace CompBigBrother.ViewModel
             {
                 Components = new ObservableCollection<CompComponent>(componentSql.GetAllComponents());
                 RaiseEvent(nameof(Components));
+            });
+
+            FilterComponents = new CustomModelCommand<string>((s) =>
+            {
+                FilteredComponents = Components.Where(c => c.Name.Contains(s) || c.SerialNumber.Contains(s)).ToList();
             });
 
             UpdateComponents = new CustomModelCommand<CompComponent>((c) =>

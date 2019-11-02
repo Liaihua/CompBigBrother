@@ -22,8 +22,9 @@ namespace CompBigBrother.ViewModel
             }
         }
 
-        public ObservableCollection<User> FilterUsers { get; set; }
+        public List<User> FilteredUsers { get; set; }
         public ObservableCollection<User> Users { get; set; }
+        public CustomModelCommand<string> FilterUsers { get; set; }
         public CustomModelCommand<User> AddUser { get; set; }
         public CustomModelCommand<User> RemoveUser { get; set; }
 
@@ -31,12 +32,18 @@ namespace CompBigBrother.ViewModel
         {
             UserSql userSql = new UserSql();
             Users = new ObservableCollection<User>(userSql.GetAllUsers());
+            FilteredUsers = new List<User>();
             UserType.GetAllUserTypes();
             AddUser = new CustomModelCommand<User>((u) =>
             {
                 User user = new User { CabID = 1, FirstName = "Имя", LastName = "Фамилия", ID = MySQLMain.ShowNextId("users"), UserTypeID = 1 };
                 Users.Add(user);
                 userSql.InsertUser(user);
+            });
+
+            FilterUsers = new CustomModelCommand<string>((s) => 
+            {
+                FilteredUsers = Users.Where((u) => u.FirstName.Contains(s) || u.LastName.Contains(s)).ToList();
             });
 
             RemoveUser = new CustomModelCommand<User>((u) =>

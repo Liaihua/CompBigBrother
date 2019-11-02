@@ -24,10 +24,5 @@ namespace CompBigBrother.DatabaseAccessLayer
             using (FileStream fs = File.Create(fileDialog.FileName))
                 workbook.Write(fs);
         }
-
-        public static void ImportTable(string name)
-        {
-            IWorkbook workbook = new XSSFWorkbook(new OpenFileDialog().FileName);
-        }
     }
 }

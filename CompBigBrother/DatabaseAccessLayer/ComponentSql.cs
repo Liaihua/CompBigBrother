@@ -21,6 +21,8 @@ namespace CompBigBrother.DatabaseAccessLayer
                     {
                         while (reader.Read())
                         {
+                            if (reader.GetInt32("id") == -1)
+                                continue;
                             components.Add(
                                 new CompComponent
                                 {
@@ -69,7 +71,7 @@ namespace CompBigBrother.DatabaseAccessLayer
 
         public void UpdateComponent(CompComponent component)
         {
-            string query = $"UPDATE components SET component_name = @a, component_price = @b, computer_id = @c, serial_number = @d, status = @e, WHERE id = {component.ID}";
+            string query = $"UPDATE components SET component_name = @a, component_price = @b, computer_id = @c, serial_number = @d, status = @e WHERE id = {component.ID}";
             if (OpenConnection())
             {
                 using (MySqlCommand command = new MySqlCommand(query, connection))

@@ -21,7 +21,8 @@
         <Menu Grid.Row="0">
             <MenuItem Header="Главная">
                 <MenuItem Header="Подключение к базе" Click="DatabaseConnectorWindow_Open"/>
-                <MenuItem Header="Резервные копии (Excel)">
+                <MenuItem Header="Экспорт в Excel" Click="ExcelExportMenuItem_Click"/>
+                <MenuItem Header="Резервные копии">
                     <MenuItem Header="Загрузить резервную копию" Click="LoadDatabaseBackup_Click"/>
                     <MenuItem Header="Сделать резервную копию" Click="MakeDatabaseBackup_Click"/>
                 </MenuItem>
@@ -55,9 +56,23 @@
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellEditingTemplate>
                             </DataGridTemplateColumn>
+                            
                             <DataGridTextColumn Header="Кабинет" Binding="{Binding RoomID}"/>
-                            <DataGridTextColumn Header="Тип компьютера" Binding="{Binding TypeID}"/>
+
+                            <DataGridTemplateColumn  Header="Тип компьютера">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding TypeValue}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                                <DataGridTemplateColumn.CellEditingTemplate>
+                                    <DataTemplate>
+                                        <ComboBox ItemsSource="{view:ComputerTypeViewModel}" SelectedItem="{Binding TypeValue}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellEditingTemplate>
+                            </DataGridTemplateColumn>
                         </DataGrid.Columns>
+                        
                         <DataGrid.ContextMenu>
                             <ContextMenu>
                                 <MenuItem Header="Обновить" Command="{Binding RefreshComputers}"/>
@@ -69,11 +84,10 @@
                     <Grid Grid.Row="1">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
-                            <ColumnDefinition Width="40px"/>
                             <ColumnDefinition Width="120px"/>
                         </Grid.ColumnDefinitions>
-                        <TextBox x:Name="SearchComputerByName_TextBlock" Grid.Column="0"/>
-                        <Button x:Name="ComputerSearch" Content="Найти" Grid.Column="1"/>
+                        <TextBox x:Name="SearchComputerByName_TextBlock" TextChanged="SearchComputerByName_TextBlock_TextChanged" Grid.Column="0"/>
+                        
                         <Button x:Name="SaveComputers" Content="Спасти и сохранить" Command="{Binding UpdateComputers}" Grid.Column="2"/>
                     </Grid>
                 </Grid>
@@ -90,6 +104,7 @@
                             <DataGridTextColumn Header="Название детали" Binding="{Binding Name}"/>
                             <DataGridTextColumn Header="Серийный номер" Binding="{Binding SerialNumber}"/>
                             <DataGridTextColumn Header="Цена" Binding="{Binding Price}"/>
+                            
                             <DataGridTemplateColumn Header="Статус">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
@@ -102,6 +117,7 @@
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellEditingTemplate>
                             </DataGridTemplateColumn>
+                            
                             <DataGridTextColumn Header="Компьютер с компонентом" Binding="{Binding ComputerID}"/>
                         </DataGrid.Columns>
                         <DataGrid.ContextMenu>
@@ -115,11 +131,9 @@
                     <Grid Grid.Row="1">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
-                            <ColumnDefinition Width="40px"/>
                             <ColumnDefinition Width="120px"/>
                         </Grid.ColumnDefinitions>
-                        <TextBox x:Name="SearchComponentByName_TextBlock" Grid.Column="0"/>
-                        <Button x:Name="ComponentSearch" Content="Найти" Grid.Column="1"/>
+                        <TextBox x:Name="SearchComponentByName_TextBlock" TextChanged="SearchComponentByName_TextBlock_TextChanged" Grid.Column="0"/>
                         <Button x:Name="SaveComponents" Content="Спасти и сохранить" Grid.Column="2" Command="{Binding UpdateComponents}"/>
                     </Grid>
                 </Grid>
@@ -135,16 +149,22 @@
                             <DataGridTextColumn Header="Имя" Binding="{Binding FirstName}"/>
                             <DataGridTextColumn Header="Фамилия" Binding="{Binding LastName}"/>
                             <DataGridTextColumn Header="Кабинет" Binding="{Binding CabID}"/>
-                            <DataGridTemplateColumn>
+                            <DataGridTemplateColumn Header="Должность">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <TextBlock Text="{Binding UserTypeValue}"/>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
+                                <DataGridTemplateColumn.CellEditingTemplate>
+                                    <DataTemplate>
+                                        <ComboBox ItemsSource="{Binding UserTypes}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellEditingTemplate>
                             </DataGridTemplateColumn>
                         </DataGrid.Columns>
                         <DataGrid.ContextMenu>
                             <ContextMenu>
+                                <MenuItem Header="Обновить" Command="{Binding RefreshUsers}"/>
                                 <MenuItem Header="Добавить пользователя" Command="{Binding AddUser}" CommandTarget="{Binding SelectedUser}"/>
                                 <MenuItem Header="Удалить пользователя" Command="{Binding RemoveUser}" CommandParameter="{Binding SelectedUser}"/>
                             </ContextMenu>
@@ -153,11 +173,9 @@
                     <Grid Grid.Row="1">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
-                            <ColumnDefinition Width="40px"/>
                             <ColumnDefinition Width="120px"/>
                         </Grid.ColumnDefinitions>
-                        <TextBox x:Name="SearchUserByName_TextBlock" Grid.Column="0"/>
-                        <Button x:Name="UserSearch" Content="Найти" Grid.Column="1"/>
+                        <TextBox x:Name="SearchUserByName_TextBlock" TextChanged="SearchUserByName_TextBlock_TextChanged" Grid.Column="0"/>
                         <Button x:Name="SaveUsers" Content="Спасти и сохранить" Grid.Column="2" Command="{Binding UpdateUsers}"/>
                     </Grid>
                 </Grid>
@@ -175,6 +193,7 @@
                         </DataGrid.Columns>
                         <DataGrid.ContextMenu>
                             <ContextMenu>
+                                <MenuItem Header="Обновить"/>
                                 <MenuItem Header="Добавить кабинет" Command="{Binding AddRoom}" CommandTarget="{Binding SelectedRoom}"/>
                                 <MenuItem Header="Удалить кабинет" Command="{Binding RemoveRoom}" CommandParameter="{Binding SelectedRoom}"/>
                             </ContextMenu>
