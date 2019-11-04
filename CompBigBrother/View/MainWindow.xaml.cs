@@ -45,12 +45,12 @@ namespace CompBigBrother
 
         private void LoadDatabaseBackup_Click(object sender, RoutedEventArgs e)
         {
-
+            MySQLMain.LoadBackup();
         }
 
         private void MakeDatabaseBackup_Click(object sender, RoutedEventArgs e)
         {
-
+            MySQLMain.MakeBackup();
         }
 
         private void AboutWindow_Open(object sender, RoutedEventArgs e)
@@ -61,11 +61,6 @@ namespace CompBigBrother
         private void CloseMenuItem_Click(object sender, RoutedEventArgs e)
         {
             Close();
-        }
-
-        private void ComputerDataGrid_SourceUpdated(object sender, DataTransferEventArgs e)
-        {
-
         }
 
         private void SearchComputerByName_TextBlock_TextChanged(object sender, RoutedEventArgs e)
@@ -90,11 +85,6 @@ namespace CompBigBrother
             }
         }
 
-        private void ExcelExportMenuItem_Click(object sender, RoutedEventArgs e)
-        {
-            DatabaseAccessLayer.ExcelExporter.ExportTables();
-        }
-
         private void SearchUserByName_TextBlock_TextChanged(object sender, RoutedEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(SearchUserByName_TextBlock.Text))
@@ -104,6 +94,22 @@ namespace CompBigBrother
                 UserViewModel.FilterUsers.Execute(SearchUserByName_TextBlock.Text);
                 UserDataGrid.ItemsSource = UserViewModel.FilteredUsers;
             }
+        }
+        
+        private void SearchJournal_TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(SearchJournal_TextBox.Text))
+                JournalListView.ItemsSource = JournalViewModel.JournalEvents;
+            else
+            {
+                JournalViewModel.FilterJournal.Execute(SearchJournal_TextBox.Text);
+                JournalListView.ItemsSource = JournalViewModel.FilteredJournalEvents;
+            }
+        }
+
+        private void ExcelExportMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            DatabaseAccessLayer.ExcelExporter.ExportTables();
         }
     }
 }

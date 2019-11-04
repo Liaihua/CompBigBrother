@@ -56,8 +56,14 @@
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellEditingTemplate>
                             </DataGridTemplateColumn>
-                            
-                            <DataGridTextColumn Header="Кабинет" Binding="{Binding RoomID}"/>
+
+                            <DataGridTemplateColumn Header="Кабинет">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding RoomID}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
 
                             <DataGridTemplateColumn  Header="Тип компьютера">
                                 <DataGridTemplateColumn.CellTemplate>
@@ -87,7 +93,6 @@
                             <ColumnDefinition Width="120px"/>
                         </Grid.ColumnDefinitions>
                         <TextBox x:Name="SearchComputerByName_TextBlock" TextChanged="SearchComputerByName_TextBlock_TextChanged" Grid.Column="0"/>
-                        
                         <Button x:Name="SaveComputers" Content="Спасти и сохранить" Command="{Binding UpdateComputers}" Grid.Column="2"/>
                     </Grid>
                 </Grid>
@@ -186,14 +191,14 @@
                         <RowDefinition Height="10*"/>
                         <RowDefinition Height="auto"/>
                     </Grid.RowDefinitions>
-                    <DataGrid Name="RoomListBox" Grid.Row="0" ItemsSource="{Binding Rooms}" AutoGenerateColumns="False" CanUserAddRows="False">
+                    <DataGrid Name="RoomListBox" Grid.Row="0" ItemsSource="{Binding Rooms}" SelectedItem="{Binding SelectedRoom}" AutoGenerateColumns="False" CanUserAddRows="False">
 
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Кабинеты" Binding="{Binding Num}"/>
                         </DataGrid.Columns>
                         <DataGrid.ContextMenu>
                             <ContextMenu>
-                                <MenuItem Header="Обновить"/>
+                                <MenuItem Header="Обновить" Command="{Binding RefreshRooms}"/>
                                 <MenuItem Header="Добавить кабинет" Command="{Binding AddRoom}" CommandTarget="{Binding SelectedRoom}"/>
                                 <MenuItem Header="Удалить кабинет" Command="{Binding RemoveRoom}" CommandParameter="{Binding SelectedRoom}"/>
                             </ContextMenu>
@@ -225,11 +230,11 @@
                     </ListView>
                     <Grid Grid.Row="1">
                         <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
                             <ColumnDefinition Width="120px"/>
-                            <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <ComboBox Width="120" Grid.Column="0"/>
-                        <TextBox Width="580" Grid.Column="1"/>
+                        <TextBox Name="SearchJournal_TextBox" TextChanged="SearchJournal_TextBox_TextChanged" Grid.Column="0" />
+                        <ComboBox Name="SearchJournalByCondition_ComboBox" ItemsSource="{Binding SearchConditions}" SelectedItem="{Binding SelectedCondition}" Grid.Column="1"/>
                     </Grid>
                 </Grid>
             </TabItem>

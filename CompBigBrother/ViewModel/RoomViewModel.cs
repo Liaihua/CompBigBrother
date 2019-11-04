@@ -24,7 +24,8 @@ namespace CompBigBrother.ViewModel
 
         public ObservableCollection<Room> Rooms { get; set; }
         public CustomModelCommand<Room> AddRoom { get; set; }
-        public CustomModelCommand<Room> UpdateRooms { get; set; }
+        public CustomModelCommand<DBNull> RefreshRooms { get; set; }
+        public CustomModelCommand<DBNull> UpdateRooms { get; set; }
         public CustomModelCommand<Room> RemoveRoom { get; set; }
 
         public RoomViewModel()
@@ -38,7 +39,13 @@ namespace CompBigBrother.ViewModel
                 roomSql.InsertRoom(r);
             });
 
-            UpdateRooms = new CustomModelCommand<Room>((c) => 
+            RefreshRooms = new CustomModelCommand<DBNull>((n) => 
+            {
+                Rooms = new ObservableCollection<Room>(roomSql.GetAllRooms());
+                RaiseEvent(nameof(Rooms));
+            });
+
+            UpdateRooms = new CustomModelCommand<DBNull>((n) => 
             {
                 foreach (Room room in Rooms)
                     roomSql.UpdateRoom(room);

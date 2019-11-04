@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
 using System.Windows;
+using Microsoft.Win32;
+using System.Diagnostics;
 
 namespace CompBigBrother
 {
@@ -94,6 +96,46 @@ namespace CompBigBrother
                 CloseConnection();
             }
             return result;
+        }
+
+        public static void MakeBackup()
+        {
+            SaveFileDialog saveDumpFileDialog = new SaveFileDialog();
+            if (OpenConnection())
+            {
+                using (MySqlCommand command = new MySqlCommand("", connection))
+                {
+                    using (MySqlBackup backup = new MySqlBackup(command))
+                    {
+                        saveDumpFileDialog.Title = "Экспорт БД";
+                        saveDumpFileDialog.DefaultExt = ".sql";
+                        saveDumpFileDialog.ShowDialog();
+                        if (!string.IsNullOrWhiteSpace(saveDumpFileDialog.FileName))
+                            backup.ExportToFile(saveDumpFileDialog.FileName);
+                    }
+                }
+                CloseConnection();
+            }
+        }
+
+        public static void LoadBackup()
+        {
+            OpenFileDialog openDumpFileDialog = new OpenFileDialog();
+            if(OpenConnection())
+            {
+                using(MySqlCommand command = new MySqlCommand("", connection))
+                {
+                    using(MySqlBackup backup = new MySqlBackup(command))
+                    {
+                        openDumpFileDialog.Title = "Импорт БД";
+                        openDumpFileDialog.DefaultExt = ".sql";
+                        openDumpFileDialog.ShowDialog();
+                        if(!string.IsNullOrWhiteSpace(openDumpFileDialog.FileName))
+                            backup.ImportFromFile(openDumpFileDialog.FileName);
+                    }
+                }
+                CloseConnection();
+            }
         }
     }
 }

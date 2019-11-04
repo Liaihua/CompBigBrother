@@ -18,6 +18,7 @@ namespace CompBigBrother.Model
         public string FirstName { get => firstName; set { firstName = value; RaiseEvent(nameof(FirstName)); } }
         public string LastName { get => lastName; set { lastName = value; RaiseEvent(nameof(LastName)); } }
         public int CabID { get => cabId; set { cabId = value; RaiseEvent(nameof(CabID)); } }
+        public string CabValue { get; set; }
         public int UserTypeID { get => userTypeId; set { userTypeId = value; RaiseEvent(nameof(UserType)); } }
         public string UserTypeValue { get => UserType.UserTypes[UserTypeID]; set {
                 UserTypeID = UserType.UserTypes.First((s) => s.Value == value).Key;
