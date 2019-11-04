@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -110,6 +111,11 @@ namespace CompBigBrother
         private void ExcelExportMenuItem_Click(object sender, RoutedEventArgs e)
         {
             DatabaseAccessLayer.ExcelExporter.ExportTables();
+        }
+
+        private void SysInfo_Click(object sender, RoutedEventArgs e)
+        {
+            Process.Start("C:\\Windows\\System32\\msinfo32.exe");
         }
     }
 }

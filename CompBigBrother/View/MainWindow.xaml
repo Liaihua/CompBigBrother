@@ -21,6 +21,7 @@
         <Menu Grid.Row="0">
             <MenuItem Header="Главная">
                 <MenuItem Header="Подключение к базе" Click="DatabaseConnectorWindow_Open"/>
+                <MenuItem Header="Узнать информацию о системе" Click="SysInfo_Click"/>
                 <MenuItem Header="Экспорт в Excel" Click="ExcelExportMenuItem_Click"/>
                 <MenuItem Header="Резервные копии">
                     <MenuItem Header="Загрузить резервную копию" Click="LoadDatabaseBackup_Click"/>
