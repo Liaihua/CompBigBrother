@@ -65,7 +65,7 @@ namespace CompBigBrother.DatabaseAccessLayer
 
         public void UpdateUser(User user)
         {
-            string query = $"UPDATE users SET first_name = @a, last_name = @b, cab_id = @c, type = @d, WHERE id = {user.ID}";
+            string query = $"UPDATE users SET first_name = @a, last_name = @b, cab_id = @c, type = @d WHERE id = {user.ID}";
             if (OpenConnection())
             {
                 using (MySqlCommand command = new MySqlCommand(query, connection))

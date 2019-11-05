@@ -72,11 +72,13 @@
                                         <TextBlock Text="{Binding TypeValue}"/>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
+                                
                                 <DataGridTemplateColumn.CellEditingTemplate>
                                     <DataTemplate>
                                         <ComboBox ItemsSource="{view:ComputerTypeViewModel}" SelectedItem="{Binding TypeValue}"/>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellEditingTemplate>
+                                
                             </DataGridTemplateColumn>
                         </DataGrid.Columns>
                         
@@ -94,7 +96,7 @@
                             <ColumnDefinition Width="120px"/>
                         </Grid.ColumnDefinitions>
                         <TextBox x:Name="SearchComputerByName_TextBlock" TextChanged="SearchComputerByName_TextBlock_TextChanged" Grid.Column="0"/>
-                        <Button x:Name="SaveComputers" Content="Спасти и сохранить" Command="{Binding UpdateComputers}" Grid.Column="2"/>
+                        <Button x:Name="SaveComputers" Content="Сохранить" Command="{Binding UpdateComputers}" Grid.Column="2"/>
                     </Grid>
                 </Grid>
             </TabItem>
@@ -140,7 +142,7 @@
                             <ColumnDefinition Width="120px"/>
                         </Grid.ColumnDefinitions>
                         <TextBox x:Name="SearchComponentByName_TextBlock" TextChanged="SearchComponentByName_TextBlock_TextChanged" Grid.Column="0"/>
-                        <Button x:Name="SaveComponents" Content="Спасти и сохранить" Grid.Column="2" Command="{Binding UpdateComponents}"/>
+                        <Button x:Name="SaveComponents" Content="Сохранить" Grid.Column="2" Command="{Binding UpdateComponents}"/>
                     </Grid>
                 </Grid>
             </TabItem>
@@ -163,7 +165,7 @@
                                 </DataGridTemplateColumn.CellTemplate>
                                 <DataGridTemplateColumn.CellEditingTemplate>
                                     <DataTemplate>
-                                        <ComboBox ItemsSource="{Binding UserTypes}"/>
+                                        <ComboBox ItemsSource="{view:UserTypeViewModel}" SelectedItem="{Binding UserTypeValue}"/>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellEditingTemplate>
                             </DataGridTemplateColumn>
@@ -182,7 +184,7 @@
                             <ColumnDefinition Width="120px"/>
                         </Grid.ColumnDefinitions>
                         <TextBox x:Name="SearchUserByName_TextBlock" TextChanged="SearchUserByName_TextBlock_TextChanged" Grid.Column="0"/>
-                        <Button x:Name="SaveUsers" Content="Спасти и сохранить" Grid.Column="2" Command="{Binding UpdateUsers}"/>
+                        <Button x:Name="SaveUsers" Content="Сохранить" Grid.Column="2" Command="{Binding UpdateUsers}"/>
                     </Grid>
                 </Grid>
             </TabItem>

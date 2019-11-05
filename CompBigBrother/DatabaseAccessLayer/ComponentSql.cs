@@ -33,6 +33,7 @@ namespace CompBigBrother.DatabaseAccessLayer
                                     ComputerID = reader.GetInt32("computer_id"),
                                     StatusID = reader.GetInt32("status"),
                                     
+                                    
                                 });
                         }
                     }
