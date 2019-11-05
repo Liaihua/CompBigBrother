@@ -105,5 +105,26 @@ namespace CompBigBrother.DatabaseAccessLayer
             string query = $"DELETE FROM components WHERE id = {component.ID}";
             ExecuteNonQuery(query);
         }
+
+        public Dictionary<int, int> GetAllComponentToComputerRelationships()
+        {
+            Dictionary<int, int> ComponentToComputerRelationships = new Dictionary<int, int>();
+            string query = "SELECT component.computer_id, computers.computer_name FROM computers, components WHERE computers.id = component.computer_id";
+            if(OpenConnection())
+            {
+                using (MySqlCommand command = new MySqlCommand(query, connection))
+                {
+                    using (MySqlDataReader reader = command.ExecuteReader())
+                    {
+                        while(reader.Read())
+                        {
+                            
+                        }
+                    }
+                }
+                CloseConnection();
+            }
+            return ComponentToComputerRelationships;
+        }
     }
 }
