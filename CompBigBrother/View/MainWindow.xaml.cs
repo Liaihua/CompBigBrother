@@ -23,11 +23,12 @@ namespace CompBigBrother
     /// </summary>
     public partial class MainWindow : Window
     {
+        RoomViewModel RoomViewModel { get; set; } = new RoomViewModel();
+        UserViewModel UserViewModel { get; set; } = new UserViewModel();
         ComputerViewModel ComputerViewModel { get; set; } = new ComputerViewModel();
         ComponentViewModel ComponentViewModel { get; set; } = new ComponentViewModel();
-        UserViewModel UserViewModel { get; set; } = new UserViewModel();
-        RoomViewModel RoomViewModel { get; set; } = new RoomViewModel();
         JournalViewModel JournalViewModel { get; set; } = new JournalViewModel();
+
         public MainWindow()
         {
             InitializeComponent();

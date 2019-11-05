@@ -61,9 +61,14 @@
                             <DataGridTemplateColumn Header="Кабинет">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <TextBlock Text="{Binding RoomID}"/>
+                                        <TextBlock Text="{Binding RoomValue}"/>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
+                                <DataGridTemplateColumn.CellEditingTemplate>
+                                    <DataTemplate>
+                                        <ComboBox ItemsSource="{view:RoomKeyValueViewModel}" SelectedItem="{Binding RoomValue}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellEditingTemplate>
                             </DataGridTemplateColumn>
 
                             <DataGridTemplateColumn  Header="Тип компьютера">
@@ -125,8 +130,19 @@
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellEditingTemplate>
                             </DataGridTemplateColumn>
-                            
-                            <DataGridTextColumn Header="Компьютер с компонентом" Binding="{Binding ComputerID}"/>
+
+                            <DataGridTemplateColumn Header="Компьютер с компонентом">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding ComputerValue}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                                <DataGridTemplateColumn.CellEditingTemplate>
+                                    <DataTemplate>
+                                        <ComboBox ItemsSource="{view:ComputersKeyValueViewModel}" SelectedItem="{Binding ComputerValue}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellEditingTemplate>
+                            </DataGridTemplateColumn>
                         </DataGrid.Columns>
                         <DataGrid.ContextMenu>
                             <ContextMenu>
@@ -156,7 +172,18 @@
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Имя" Binding="{Binding FirstName}"/>
                             <DataGridTextColumn Header="Фамилия" Binding="{Binding LastName}"/>
-                            <DataGridTextColumn Header="Кабинет" Binding="{Binding CabID}"/>
+                            <DataGridTemplateColumn Header="Кабинет" SortMemberPath="{Binding RoomValue}">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding RoomValue}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                                <DataGridTemplateColumn.CellEditingTemplate>
+                                    <DataTemplate>
+                                        <ComboBox ItemsSource="{view:RoomKeyValueViewModel}" SelectedItem="{Binding RoomValue}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellEditingTemplate>
+                            </DataGridTemplateColumn>
                             <DataGridTemplateColumn Header="Должность">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>

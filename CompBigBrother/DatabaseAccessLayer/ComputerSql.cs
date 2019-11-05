@@ -32,7 +32,8 @@ namespace CompBigBrother.DatabaseAccessLayer
                                     SerialNumber = reader.GetString("serial_number"),
                                     RoomID = reader.GetInt32("room_id"),
                                     StatusID = reader.GetInt32("status"),
-                                    TypeID = reader.GetInt32("type")
+                                    TypeID = reader.GetInt32("type"),
+                                    RoomValue = RoomSql.RoomsKeyValues[reader.GetInt32("room_id")]
                                 });                           
                         }
                     }

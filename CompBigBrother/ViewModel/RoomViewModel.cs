@@ -7,6 +7,8 @@ using System.Text;
 using System.Threading.Tasks;
 using CompBigBrother.Model;
 using CompBigBrother.DatabaseAccessLayer;
+using System.Windows.Markup;
+
 namespace CompBigBrother.ViewModel
 {
     class RoomViewModel : AbstractNotifyModel
@@ -56,6 +58,14 @@ namespace CompBigBrother.ViewModel
                 Rooms.Remove(r);
                 roomSql.DeleteRoom(r);
             }, () => SelectedRoom != null);
+        }
+    }
+
+    class RoomKeyValueViewModel : MarkupExtension
+    {
+        public override object ProvideValue(IServiceProvider serviceProvider)
+        {
+            return RoomSql.RoomsKeyValues.Values;
         }
     }
 }

@@ -9,8 +9,10 @@ namespace CompBigBrother.DatabaseAccessLayer
 {
     class ComponentSql: MySQLMain
     {
+        public static Dictionary<int, string> ComputersKeyValue = new Dictionary<int, string>();
         public List<CompComponent> GetAllComponents()
         {
+            GetAllComputerKeyValues();
             List<CompComponent> components = new List<CompComponent>();
             string query = "SELECT * FROM components";
             if (OpenConnection())
@@ -32,7 +34,7 @@ namespace CompBigBrother.DatabaseAccessLayer
                                     SerialNumber = reader.GetString("serial_number"),
                                     ComputerID = reader.GetInt32("computer_id"),
                                     StatusID = reader.GetInt32("status"),
-                                    
+                                    ComputerValue = ComputersKeyValue[reader.GetInt32("computer_id")]
                                     
                                 });
                         }
@@ -83,7 +85,7 @@ namespace CompBigBrother.DatabaseAccessLayer
                     parameter = new MySqlParameter("@b", MySqlDbType.Float);
                     parameter.Value = component.Price;
                     command.Parameters.Add(parameter);
-                    parameter = new MySqlParameter("@c", MySqlDbType.String);
+                    parameter = new MySqlParameter("@c", MySqlDbType.Int32);
                     parameter.Value = component.ComputerID;
                     command.Parameters.Add(parameter);
                     parameter = new MySqlParameter("@d", MySqlDbType.String);
@@ -106,25 +108,23 @@ namespace CompBigBrother.DatabaseAccessLayer
             ExecuteNonQuery(query);
         }
 
-        public Dictionary<int, int> GetAllComponentToComputerRelationships()
+        private void GetAllComputerKeyValues()
         {
-            Dictionary<int, int> ComponentToComputerRelationships = new Dictionary<int, int>();
-            string query = "SELECT component.computer_id, computers.computer_name FROM computers, components WHERE computers.id = component.computer_id";
-            if(OpenConnection())
+            string query = "SELECT computers.id, computers.computer_name FROM computers";
+            Dictionary<int, string> keyValuesTemp = new Dictionary<int, string>();
+            if (OpenConnection())
             {
                 using (MySqlCommand command = new MySqlCommand(query, connection))
                 {
                     using (MySqlDataReader reader = command.ExecuteReader())
                     {
-                        while(reader.Read())
-                        {
-                            
-                        }
+                        while (reader.Read())
+                            keyValuesTemp.Add(reader.GetInt32("id"), reader.GetString("computer_name"));
                     }
                 }
                 CloseConnection();
             }
-            return ComponentToComputerRelationships;
+            ComputersKeyValue = keyValuesTemp;
         }
     }
 }

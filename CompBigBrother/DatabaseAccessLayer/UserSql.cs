@@ -27,7 +27,8 @@ namespace CompBigBrother.DatabaseAccessLayer
                                 FirstName = reader.GetString("first_name"),
                                 LastName = reader.GetString("last_name"),
                                 CabID = reader.GetInt32("cab_id"),
-                                UserTypeID = reader.GetInt32("type")
+                                UserTypeID = reader.GetInt32("type"),
+                                CabValue = RoomSql.RoomsKeyValues[reader.GetInt32("cab_id")]
                             });
                         }
                     }

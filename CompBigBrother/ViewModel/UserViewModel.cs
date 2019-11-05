@@ -22,6 +22,7 @@ namespace CompBigBrother.ViewModel
             }
         }
 
+        public Dictionary<int, string> RoomRelations { get; set; }
         public List<User> FilteredUsers { get; set; }
         public ObservableCollection<User> Users { get; set; }
         public CustomModelCommand<string> FilterUsers { get; set; }
@@ -36,6 +37,7 @@ namespace CompBigBrother.ViewModel
             Users = new ObservableCollection<User>(userSql.GetAllUsers());
             FilteredUsers = new List<User>();
             UserType.GetAllUserTypes();
+            RoomRelations = RoomSql.RoomsKeyValues;
             
             FilterUsers = new CustomModelCommand<string>((s) => 
             {
@@ -51,7 +53,10 @@ namespace CompBigBrother.ViewModel
             UpdateUsers = new CustomModelCommand<DBNull>((n) => 
             {
                 foreach (User user in Users)
+                {
+                    user.CabID = RoomRelations.First((kv) => kv.Value == user.CabValue).Key;
                     userSql.UpdateUser(user);
+                }
             });
 
             AddUser = new CustomModelCommand<User>((u) =>

@@ -10,6 +10,7 @@ namespace CompBigBrother.DatabaseAccessLayer
 {
     class RoomSql : MySQLMain
     {
+        public static Dictionary<int, string> RoomsKeyValues = new Dictionary<int, string>();
         public List<Room> GetAllRooms()
         {
             List<Room> rooms = new List<Room>();
@@ -20,8 +21,6 @@ namespace CompBigBrother.DatabaseAccessLayer
                 using (MySqlDataReader reader = command.ExecuteReader())
                     while (reader.Read())
                     {
-                        if (reader.GetInt32("id") == -1)
-                            continue;
                         rooms.Add(new Room
                         {
                             ID = reader.GetInt32("id"),
@@ -29,8 +28,17 @@ namespace CompBigBrother.DatabaseAccessLayer
                         });
                     }
                 CloseConnection();
-            } 
+            }
+            RoomsKeyValues = ConvertRoomsToDictionary(rooms);
             return rooms;
+        }
+
+        private Dictionary<int, string> ConvertRoomsToDictionary(List<Room> rooms)
+        {
+            Dictionary<int, string> ConvertedDictionary = new Dictionary<int, string>();
+            foreach (Room room in rooms)
+                ConvertedDictionary.Add(room.ID, room.Num);
+            return ConvertedDictionary;
         }
 
         public void InsertRoom(Room room)

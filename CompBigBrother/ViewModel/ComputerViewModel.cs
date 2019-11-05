@@ -21,6 +21,8 @@ namespace CompBigBrother.ViewModel
                 RaiseEvent(nameof(SelectedComputer));
             }
         }
+
+        public Dictionary<int, string> RoomRelations { get; set; }
         public ObservableCollection<Computer> Computers { get; set; }
         public List<Computer> FilteredComputers { get; set; }
         public CustomModelCommand<DBNull> RefreshComputers { get; set; }
@@ -33,6 +35,7 @@ namespace CompBigBrother.ViewModel
         {
             ComputerSql computerSql = new ComputerSql();
             Computers = new ObservableCollection<Computer>(computerSql.GetAllComputers());
+            RoomRelations = RoomSql.RoomsKeyValues;
             FilteredComputers = new List<Computer>();
             Status.GetAllStatuses();
             ComputerType.GetAllComputerTypes();
@@ -56,8 +59,11 @@ namespace CompBigBrother.ViewModel
 
             UpdateComputers = new CustomModelCommand<Computer>((c) => // Недопил (???)
             {
-                foreach(Computer computer in Computers)
+                foreach (Computer computer in Computers)
+                {
+                    computer.RoomID = RoomRelations.First((kv) => kv.Value == computer.RoomValue).Key;
                     computerSql.UpdateComputer(computer);
+                }
             });
 
             RemoveComputer = new CustomModelCommand<Computer>((c) =>

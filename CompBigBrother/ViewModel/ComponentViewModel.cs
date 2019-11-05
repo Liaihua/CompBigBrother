@@ -7,6 +7,8 @@ using System.Text;
 using System.Threading.Tasks;
 using CompBigBrother.Model;
 using CompBigBrother.DatabaseAccessLayer;
+using System.Windows.Markup;
+
 namespace CompBigBrother.ViewModel
 {
     class ComponentViewModel : AbstractNotifyModel
@@ -21,6 +23,7 @@ namespace CompBigBrother.ViewModel
                 RaiseEvent(nameof(SelectedComponent));
             }
         }
+        public Dictionary<int, string> RelatedComputers { get; set; }
         public ObservableCollection<CompComponent> Components { get; set; }
         public List<CompComponent> FilteredComponents { get; set; }
         public CustomModelCommand<DBNull> RefreshComponents { get; set; }
@@ -33,6 +36,7 @@ namespace CompBigBrother.ViewModel
         {
             ComponentSql componentSql = new ComponentSql();
             Components = new ObservableCollection<CompComponent>(componentSql.GetAllComponents());
+            RelatedComputers = ComponentSql.ComputersKeyValue;
             FilteredComponents = new List<CompComponent>();
 
             AddComponent = new CustomModelCommand<CompComponent>((c) =>
@@ -56,7 +60,10 @@ namespace CompBigBrother.ViewModel
             UpdateComponents = new CustomModelCommand<CompComponent>((c) =>
             {
                 foreach (CompComponent component in Components)
+                {
+                    component.ComputerID = RelatedComputers.First((kv) => kv.Value == component.ComputerValue).Key;
                     componentSql.UpdateComponent(component);
+                }
             });
 
             RemoveComponent = new CustomModelCommand<CompComponent>((c) =>
@@ -64,6 +71,14 @@ namespace CompBigBrother.ViewModel
                 Components.Remove(c);
                 componentSql.DeleteComponent(c);
             }, () => SelectedComponent != null);
+        }
+    }
+
+    class ComputersKeyValueViewModel : MarkupExtension
+    {
+        public override object ProvideValue(IServiceProvider serviceProvider)
+        {
+            return ComponentSql.ComputersKeyValue.Values.ToList();
         }
     }
 }
