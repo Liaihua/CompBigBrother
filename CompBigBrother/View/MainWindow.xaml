@@ -172,7 +172,7 @@
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Имя" Binding="{Binding FirstName}"/>
                             <DataGridTextColumn Header="Фамилия" Binding="{Binding LastName}"/>
-                            <DataGridTemplateColumn Header="Кабинет" SortMemberPath="{Binding RoomValue}">
+                            <DataGridTemplateColumn Header="Кабинет">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <TextBlock Text="{Binding RoomValue}"/>

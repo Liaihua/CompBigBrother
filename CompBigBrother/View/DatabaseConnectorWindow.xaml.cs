@@ -24,9 +24,10 @@ namespace CompBigBrother
     /// </summary>
     public partial class DatabaseConnector : Window
     {
-        DatabaseConnectionOptions ConnectionOptions = DatabaseConnectionOptions.GetValues();
+        DatabaseConnectionOptions ConnectionOptions;
         public DatabaseConnector()
         {
+            ConnectionOptions = DatabaseConnectionOptions.GetValues();
             InitializeComponent();
             DataContext = ConnectionOptions;
         }

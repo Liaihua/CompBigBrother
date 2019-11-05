@@ -30,7 +30,7 @@ namespace CompBigBrother
                     CloseConnection();
                 }
             }
-            catch (Exception ex) { System.Windows.MessageBox.Show(ex.Message); } 
+            catch (Exception ex) { CloseConnection(); } 
         }
     }
 }
