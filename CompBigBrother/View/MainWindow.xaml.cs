@@ -23,22 +23,39 @@ namespace CompBigBrother
     /// </summary>
     public partial class MainWindow : Window
     {
-        RoomViewModel RoomViewModel { get; set; } = new RoomViewModel();
-        UserViewModel UserViewModel { get; set; } = new UserViewModel();
-        ComputerViewModel ComputerViewModel { get; set; } = new ComputerViewModel();
-        ComponentViewModel ComponentViewModel { get; set; } = new ComponentViewModel();
-        JournalViewModel JournalViewModel { get; set; } = new JournalViewModel();
+        RoomViewModel RoomViewModel { get; set; }
+        UserViewModel UserViewModel { get; set; }
+        ComputerViewModel ComputerViewModel { get; set; }
+        ComponentViewModel ComponentViewModel { get; set; }
+        JournalViewModel JournalViewModel { get; set; }
 
         public MainWindow()
         {
             InitializeComponent();
             MySQLMain.SetupMySqlConnection();
-            ComputerTab.DataContext = ComputerViewModel;
-            ComponentTab.DataContext = ComponentViewModel;
-            UserTab.DataContext = UserViewModel;
-            RoomTab.DataContext = RoomViewModel;
-            JournalTab.DataContext = JournalViewModel;
+            try
+            {
+                RoomViewModel = new RoomViewModel();
+                UserViewModel = new UserViewModel();
+                ComputerViewModel = new ComputerViewModel();
+                ComponentViewModel = new ComponentViewModel();
+                JournalViewModel = new JournalViewModel();
+            }
+            catch
+            {
+                MySQLMain.CloseConnection(); // сброс соединения в случае, если SQL-коннекторы не смогли закрыть соединение
+                MessageBox.Show("Внимание, база данных не установлена. Пожалуйста, установите ее из резервной копии");
+            }
+            finally
+            {
+                ComputerTab.DataContext = ComputerViewModel;
+                ComponentTab.DataContext = ComponentViewModel;
+                UserTab.DataContext = UserViewModel;
+                RoomTab.DataContext = RoomViewModel;
+                JournalTab.DataContext = JournalViewModel;
+            }
         }
+
 
         private void DatabaseConnectorWindow_Open(object sender, RoutedEventArgs e)
         {

@@ -101,15 +101,15 @@ namespace CompBigBrother
         public static void MakeBackup()
         {
             SaveFileDialog saveDumpFileDialog = new SaveFileDialog();
+            saveDumpFileDialog.Title = "Экспорт БД";
+            saveDumpFileDialog.DefaultExt = ".sql";
+            saveDumpFileDialog.ShowDialog();
             if (OpenConnection())
             {
                 using (MySqlCommand command = new MySqlCommand("", connection))
                 {
                     using (MySqlBackup backup = new MySqlBackup(command))
                     {
-                        saveDumpFileDialog.Title = "Экспорт БД";
-                        saveDumpFileDialog.DefaultExt = ".sql";
-                        saveDumpFileDialog.ShowDialog();
                         if (!string.IsNullOrWhiteSpace(saveDumpFileDialog.FileName))
                             backup.ExportToFile(saveDumpFileDialog.FileName);
                     }
@@ -121,15 +121,15 @@ namespace CompBigBrother
         public static void LoadBackup()
         {
             OpenFileDialog openDumpFileDialog = new OpenFileDialog();
-            if(OpenConnection())
+            openDumpFileDialog.Title = "Импорт БД";
+            openDumpFileDialog.DefaultExt = ".sql";
+            openDumpFileDialog.ShowDialog();
+            if (OpenConnection())
             {
                 using(MySqlCommand command = new MySqlCommand("", connection))
                 {
                     using(MySqlBackup backup = new MySqlBackup(command))
                     {
-                        openDumpFileDialog.Title = "Импорт БД";
-                        openDumpFileDialog.DefaultExt = ".sql";
-                        openDumpFileDialog.ShowDialog();
                         if(!string.IsNullOrWhiteSpace(openDumpFileDialog.FileName))
                             backup.ImportFromFile(openDumpFileDialog.FileName);
                     }

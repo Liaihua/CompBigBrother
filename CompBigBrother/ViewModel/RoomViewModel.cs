@@ -34,6 +34,7 @@ namespace CompBigBrother.ViewModel
         {
             RoomSql roomSql = new RoomSql();
             Rooms = new ObservableCollection<Room>(roomSql.GetAllRooms());
+            Rooms.RemoveAt(0); // удаление -1 комнаты из списка
             AddRoom = new CustomModelCommand<Room>((r) =>
             {
                 r = new Room { ID = MySQLMain.ShowNextId("rooms"), Num = "Новая комната" };
@@ -44,6 +45,7 @@ namespace CompBigBrother.ViewModel
             RefreshRooms = new CustomModelCommand<DBNull>((n) => 
             {
                 Rooms = new ObservableCollection<Room>(roomSql.GetAllRooms());
+                Rooms.RemoveAt(0);
                 RaiseEvent(nameof(Rooms));
             });
 
