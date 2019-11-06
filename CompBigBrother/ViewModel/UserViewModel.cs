@@ -54,14 +54,14 @@ namespace CompBigBrother.ViewModel
             {
                 foreach (User user in Users)
                 {
-                    user.CabID = RoomRelations.First((kv) => kv.Value == user.CabValue).Key;
+                    user.RoomID = RoomRelations.First((kv) => kv.Value == user.RoomValue).Key;
                     userSql.UpdateUser(user);
                 }
             });
 
             AddUser = new CustomModelCommand<User>((u) =>
             {
-                User user = new User { CabID = 1, FirstName = "Имя", LastName = "Фамилия", ID = MySQLMain.ShowNextId("users"), UserTypeID = 1 };
+                User user = new User { RoomID = 1, FirstName = "Имя", LastName = "Фамилия", ID = MySQLMain.ShowNextId("users"), UserTypeID = 1 };
                 Users.Add(user);
                 userSql.InsertUser(user);
             });

@@ -16,15 +16,10 @@
         </Style>
     </Window.Resources>
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
             <TextBlock Grid.Row="0" x:Name="Title" Text="PC-Accounting"/>
             <TextBlock Grid.Row="0" Text="(a. k. a. Computers' Big Brother and The Warrior of The Her Majesty Bureaucracy" FontSize="12px" FontStyle="Normal"/>
             <TextBlock Grid.Row="0" Text="Авторство: Вовченко И., гр. 1131. Все права не защищены" FontSize="12px" FontStyle="Normal"/>
         </StackPanel>
-        <Image Grid.Row="1" Source="/enslaved_computer.jpg" Margin="24"/>
     </Grid>
 </Window>

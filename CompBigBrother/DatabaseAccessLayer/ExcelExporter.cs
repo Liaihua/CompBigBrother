@@ -88,7 +88,7 @@ namespace CompBigBrother.DatabaseAccessLayer
                 row.CreateCell(1).SetCellValue(users[i].FirstName);
                 row.CreateCell(2).SetCellValue(users[i].LastName);
                 row.CreateCell(3).SetCellValue(users[i].UserTypeValue);
-                row.CreateCell(4).SetCellValue(users[i].CabValue);
+                row.CreateCell(4).SetCellValue(users[i].RoomValue);
             }
 
             IRow RoomTitleRow = RoomSheet.CreateRow(0);

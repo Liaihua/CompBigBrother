@@ -26,9 +26,9 @@ namespace CompBigBrother.DatabaseAccessLayer
                                 ID = reader.GetInt32("id"),
                                 FirstName = reader.GetString("first_name"),
                                 LastName = reader.GetString("last_name"),
-                                CabID = reader.GetInt32("cab_id"),
+                                RoomID = reader.GetInt32("cab_id"),
                                 UserTypeID = reader.GetInt32("type"),
-                                CabValue = RoomSql.RoomsKeyValues[reader.GetInt32("cab_id")]
+                                RoomValue = RoomSql.RoomsKeyValues[reader.GetInt32("cab_id")]
                             });
                         }
                     }
@@ -53,7 +53,7 @@ namespace CompBigBrother.DatabaseAccessLayer
                     parameter.Value = user.LastName;
                     command.Parameters.Add(parameter);
                     parameter = new MySqlParameter("@c", MySqlDbType.Int32);
-                    parameter.Value = user.CabID;
+                    parameter.Value = user.RoomID;
                     command.Parameters.Add(parameter);
                     parameter = new MySqlParameter("@d", MySqlDbType.String);
                     parameter.Value = user.UserTypeID;
@@ -78,7 +78,7 @@ namespace CompBigBrother.DatabaseAccessLayer
                     parameter.Value = user.LastName;
                     command.Parameters.Add(parameter);
                     parameter = new MySqlParameter("@c", MySqlDbType.Int32);
-                    parameter.Value = user.CabID;
+                    parameter.Value = user.RoomID;
                     command.Parameters.Add(parameter);
                     parameter = new MySqlParameter("@d", MySqlDbType.String);
                     parameter.Value = user.UserTypeID;

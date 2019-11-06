@@ -34,8 +34,9 @@ namespace CompBigBrother
 
         private void btn_saveMySql(object sender, RoutedEventArgs e)
         {
-            MySQLMain.SetupMySqlConnection();
             ConnectionOptions.Save.Execute(null);
+            MySQLMain.SetupMySqlConnection();
+            
             // Здесь должна быть проверка на наличие уже существующего окна MainWindow
             new MainWindow().Show();
             Close();

@@ -105,7 +105,7 @@
                     </Grid>
                 </Grid>
             </TabItem>
-            <TabItem Name="ComponentTab" Header="Запчасти и устройства">
+            <TabItem Name="ComponentTab" Header="Запчасти и компоненты">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="10*"/>
@@ -175,12 +175,12 @@
                             <DataGridTemplateColumn Header="Кабинет">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <TextBlock Text="{Binding CabValue}"/>
+                                        <TextBlock Text="{Binding RoomValue}"/>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                                 <DataGridTemplateColumn.CellEditingTemplate>
                                     <DataTemplate>
-                                        <ComboBox ItemsSource="{view:RoomKeyValueViewModel}" SelectedItem="{Binding CabValue}"/>
+                                        <ComboBox ItemsSource="{view:RoomKeyValueViewModel}" SelectedItem="{Binding RoomValue}"/>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellEditingTemplate>
                             </DataGridTemplateColumn>
