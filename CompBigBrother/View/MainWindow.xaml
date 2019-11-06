@@ -175,12 +175,12 @@
                             <DataGridTemplateColumn Header="Кабинет">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <TextBlock Text="{Binding RoomValue}"/>
+                                        <TextBlock Text="{Binding CabValue}"/>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                                 <DataGridTemplateColumn.CellEditingTemplate>
                                     <DataTemplate>
-                                        <ComboBox ItemsSource="{view:RoomKeyValueViewModel}" SelectedItem="{Binding RoomValue}"/>
+                                        <ComboBox ItemsSource="{view:RoomKeyValueViewModel}" SelectedItem="{Binding CabValue}"/>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellEditingTemplate>
                             </DataGridTemplateColumn>

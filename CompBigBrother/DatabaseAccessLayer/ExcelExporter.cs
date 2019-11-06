@@ -47,7 +47,7 @@ namespace CompBigBrother.DatabaseAccessLayer
                 row.CreateCell(0).SetCellValue(i + 1);
                 row.CreateCell(1).SetCellValue(computers[i].Name);
                 row.CreateCell(2).SetCellValue(computers[i].Price);
-                row.CreateCell(3).SetCellValue(computers[i].RoomID);
+                row.CreateCell(3).SetCellValue(computers[i].RoomValue);
                 row.CreateCell(4).SetCellValue(computers[i].SerialNumber);
                 row.CreateCell(5).SetCellValue(computers[i].StatusValue);
                 row.CreateCell(6).SetCellValue(computers[i].TypeValue);
